@@ -1,3 +1,28 @@
--form_for @icon, :html => { :multipart => true } do |form|
-  =form.file_field :file
+-form_for [@theme,@icons.first], :html => { :multipart => true } do |form|
+  
+  #icons
+    -@icons.each_with_index do |icon,i|
+      -if icon.pk
+        %img{:width => 49, :height => 49, :src => icon.url}
+      -else
+        .icon
+          =fields_for "icons[]", icon do |icf|
+            -if icon.errors
+              .errors
+                -icon.errors.full_messages.each do |error|
+                  .error=error
+            =icf.text_field :app_id
+            =icf.hidden_field :theme_id
+            -if icon.file_uploaded
+              =icf.hidden_field :asset_code
+            -else
+              =icf.file_field :file
+  
+  .icon_app_name
+    =#text_field_tag 'icon_app_name', @icon.app_name, :class => 'testy', :autocomplete => 'off'
+    / .autocomplete
+    /   %ul.say-type
+    /     %li
+    /       Type to view possible resutls
+    /   %ul.results
   =form.submit

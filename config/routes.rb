@@ -50,8 +50,13 @@ Wb::Application.routes.draw do
   match 'app/:app_id/icons' => 'icons#index'
   
   resources :icons
-  resources :themes
-  resources :apps
+  resources :themes do
+    resources :icons
+  end
+  
+  resources :apps do
+    resources :icons
+  end
   
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

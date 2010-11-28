@@ -1,0 +1,22 @@
+= form_for @app do |f|
+  -if @app.errors.any?
+    #errorExplanation
+      %h2= "#{pluralize(@app.errors.count, "error")} prohibited this app from being saved:"
+      %ul
+        - @app.errors.full_messages.each do |msg|
+          %li= msg
+  
+  .fields
+    .field
+      = f.label :name
+      = f.text_field :name
+    
+    .field
+      = f.label :store_url, 'Store URL'
+      = f.text_field :store_url
+    
+    .field
+      = f.label :uniq_name
+      = f.text_field :uniq_name
+  .actions
+    = f.submit 'Save'

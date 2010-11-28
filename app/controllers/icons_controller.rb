@@ -1,33 +1,38 @@
 class IconsController < ApplicationController
   before_filter do
     session.instance_variable_set :@user, User.new
+    
+    @theme = Theme[params[:theme_id]] if params[:theme_id]
+    @app = App[params[:app_id]] if params[:app_id]
   end
   
   def index
     @icons = Icon.live
     
-    if params[:theme_id]
-      @icons.filter!(:theme_id => params[:theme_id]) if params[:theme_id]
-      @theme = Theme[params[:theme_id]]
-    elsif params[:app_id]
-      @icons.filter!(:app_id => params[:app_id])
-      @app = App[params[:app_id]]
-    end
+    @icons.filter!(:theme_id => @theme.pk) if @theme
+    @icons.filter!(:app_id => @app.pk) if @app
     
     @icons.limit!(*pager_params)
   end
   
   def new
     @icon = Icon.new
+    @icon.theme_id = @theme.pk if @theme
+    @app.app_id = @app.pk if @app
     @icon.state = 'pending'
+    @icons = [@icon]*10
   end
   
   def create
-    @icon = Icon.new(params[:icon])
-    @icon.state = 'pending' unless session.user.is_admin?
-    @icon.save
+    @icons = params[:icons].collect {|i| Icon.new(i)}
     
-    redirect_to @icon
+    @icons.each {|i| i.state = 'pending'} unless session.user.is_admin?
+    # debugger
+    if @icons.select {|i| !i.save }.empty?
+      redirect_to @theme
+    else
+      render(:new)
+    end
   end
   
   def destroy
