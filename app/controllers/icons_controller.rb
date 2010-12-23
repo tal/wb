@@ -20,16 +20,16 @@ class IconsController < ApplicationController
     @icon.theme_id = @theme.pk if @theme
     @app.app_id = @app.pk if @app
     @icon.state = 'pending'
-    @icons = [@icon]*10
+    @icons = [@icon]*1
   end
   
   def create
-    @icons = params[:icons].collect {|i| Icon.new(i)}
+    @icons = params[:icons].collect {|num,i| Icon.new(i)}
     
     @icons.each {|i| i.state = 'pending'} unless session.user.is_admin?
     # debugger
     if @icons.select {|i| !i.save }.empty?
-      redirect_to @theme
+      redirect_to theme_icons_path(@theme)
     else
       render(:new)
     end

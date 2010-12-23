@@ -28,6 +28,7 @@ end
 
 gem 'sequel'
 gem 'sequel-rails'
+gem 'mustache'
 gem 'haml'
 gem 'haml-rails'
 gem 'koalemos'

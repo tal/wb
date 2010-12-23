@@ -1,0 +1,18 @@
+<div>
+{{#results}}
+  {{> app}}
+{{/results}}
+{{^results}}
+  <li class="text">
+    {{#text}}
+      {{text}}
+    {{/text}}
+    {{^text}}
+      <div>No results found in database found for {{val}}.</div>
+      <a class="search_itunes">
+        Click Here to have us iTunes App Store for you?
+      </a>
+    {{/text}}
+  </li>
+{{/results}}
+</div>

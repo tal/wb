@@ -69,7 +69,3 @@ div.field, div.actions {
   margin: 0;
   list-style: none;
 }
-
-.result.selected {
-  background: red;
-}

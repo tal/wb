@@ -1,16 +1,22 @@
 class AppsController < ApplicationController
   # GET /apps
-  # GET /apps.xml
+  # GET /apps.json
   def index
-    @apps = App.dataset
-    
-    @apps.filter!(:name.like("#{params[:filter].capitalize}%")) if params[:filter]
-    
-    @apps = @apps.limit!(*pager_params).all
+    if params[:from_app_store]
+      @apps = AppStoreSearch.with_apps(params[:filter])
+    else
+      @apps = App.dataset
+      
+      if params[:filter]
+        like = "#{params[:filter].downcase}%"
+        @apps.filter!{ ucase(name).like(ucase(like)) }
+      end
+      
+      @apps = @apps.limit!(*pager_params).all
+    end
     
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @apps }
       format.json { render :json => @apps }
     end
   end

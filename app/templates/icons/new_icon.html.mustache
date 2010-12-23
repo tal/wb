@@ -1,0 +1,16 @@
+{{#values}}
+<div class='icon'>
+  <div class='errors'>
+  </div>
+  <div class='app'>
+    <input id="icons_{{index_in_set}}_app_id" name="icons[{{index_in_set}}][app_id]" size="30" type="text" value="{{app_id}}"/>
+  </div>
+  <div class="sizes">
+    <input id="icons_{{index_in_set}}_iphone1" type="radio" name="icons[{{index_in_set}}][size]" value="iphone1" checked="checked"/> iPhone
+    <input id="icons_{{index_in_set}}_ipad1" type="radio" name="icons[{{index_in_set}}][size]" value="ipad1" /> iPad
+    <input id="icons_{{index_in_set}}_iphone2" type="radio" name="icons[{{index_in_set}}][size]" value="iphone2" /> iPhone 4
+  </div>
+  <input id="icons_{{index_in_set}}_theme_id" name="icons[{{index_in_set}}][theme_id]" type="hidden" value="{{theme_id}}" />
+  <input id="icons_{{index_in_set}}_file" name="icons[{{index_in_set}}][file]" type="file" />
+</div>
+{{/values}}

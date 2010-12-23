@@ -21,11 +21,15 @@ class App < Sequel::Model
   end
   
   def image
-    default_icon.try(:url) || 'http://dummyimage.com/49.png'
+    default_icon.try(:url) || 'http://dummyimage.com/59.png'
   end
   
   def as_json(*args)
-    super(*args).merge(:image => image)
+    {
+      :new => new?,
+      :values => values,
+      :image => image
+    }
   end
   
   def self.find_or_initialize_by_name(name)

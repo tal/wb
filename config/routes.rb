@@ -48,6 +48,8 @@ Wb::Application.routes.draw do
   
   match 'theme/:theme_id/icons' => 'icons#index'
   match 'app/:app_id/icons' => 'icons#index'
+  match 'templates' => 'template#all'
+  match 'template/:template' => 'template#show'
   
   resources :icons
   resources :themes do

@@ -85,6 +85,10 @@ module AppStoreSearch
       {:name => name, :store_url => url, :url => app_url, :app_store_app => self}
     end
     
+    def new_app
+      ::App.new(get_app_values)
+    end
+    
   private
     
     def title
@@ -103,22 +107,39 @@ module AppStoreSearch
   
 end
 
-def AppStoreSearch app_name, args = {}
-  url = URL.new('http://ajax.googleapis.com/ajax/services/search/web?v=1.0')
-  url.params[:q] = "site:http://itunes.apple.com/us/app/ #{app_name}"
-  # url = URI.parse("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=site:http%3A%2F%2Fitunes.apple.com%2Fus%2Fapp%2F+#{CGI.escape(app_name)}")
-  hash = {:results => []}
-  Yajl::HttpStream.get(url.to_uri, :symbolize_keys => true) do |h|
-    hash = h
+module AppStoreSearch
+  extend self
+  
+  def search app_name, args = {}
+    url = URL.new('http://ajax.googleapis.com/ajax/services/search/web?v=1.0')
+    url.params[:q] = "site:http://itunes.apple.com/us/app/ #{app_name}"
+    hash = {:results => []}
+    Yajl::HttpStream.get(url.to_uri, :symbolize_keys => true) do |h|
+      hash = h
+    end
+  
+    google_results = hash[:responseData][:results].collect do |r|
+      AppStoreSearch::GoogleResult.new(r)
+    end
+  
+    return google_results.first.try(:app) if args[:first]
+  
+    google_results[0...(args[:results]||3)].collect do |g|
+      g.app
+    end
   end
   
-  google_results = hash[:responseData][:results].collect do |r|
-    AppStoreSearch::GoogleResult.new(r)
+  def with_apps app_name, args={}
+    results = search(app_name, :results => args[:results]||5)
+    
+    results.collect do |app|
+      next unless app.name.present?
+      ::App[:name => app.name] || app.new_app.save
+    end.compact
   end
   
-  return google_results.first.try(:app) if args[:first]
-  
-  google_results[0...(args[:results]||3)].collect do |g|
-    g.app
-  end
+end
+
+def AppStoreSearch *args
+  AppStoreSearch.search(*args)
 end
