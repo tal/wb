@@ -1,0 +1,74 @@
+@import reset.css
+@import mixins
+html
+  overflow-y: scroll
+
+.spinner
+  height: 150px
+  background: red
+
+#themes
+  width: 510px
+  margin: 0 auto
+  
+
+.theme
+  clear: left
+
+.icons
+  +clearfix
+  display: block
+  .icon
+    float: left
+    position: relative
+    
+    .icon-image
+      
+      img
+        width: 50px
+        height: 50px
+      
+.icon-image
+  position: relative
+  &.show-size:after
+    content: ''
+    display: block
+    position: absolute
+    bottom: 0
+    left: 0
+    width: 25px
+    height: 25px
+    background: url(/images/icons-size.png)
+
+.size-iphone1
+  .icon-image.show-size:after
+    background-position: 0 0
+    
+.size-ipad1
+  .icon-image.show-size:after
+    background-position: -25px 0
+
+.size-iphone2
+  .icon-image.show-size:after
+    background-position: 0 -25px
+
+
+#icon-compare
+  position: absolute
+  padding: 5px
+  background: #aaa
+  
+  .primary
+    +clearfix
+  
+  .dummy
+    float: left
+    width: 50px
+    height: 50px
+  
+  .default
+    float: left
+  
+  img
+    height: 50px
+    width: 50px

@@ -8,7 +8,7 @@ class AppsController < ApplicationController
       @apps = App.dataset
       
       if params[:filter]
-        like = "#{params[:filter].downcase}%"
+        like = "#{params[:filter]}%"
         @apps.filter!{ ucase(name).like(ucase(like)) }
       end
       

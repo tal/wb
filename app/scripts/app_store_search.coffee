@@ -14,7 +14,7 @@ class WB.AppStoreSearch
     @el.find('.search .box').keyup (e) =>
       [down, up, enter, esc] = [38, 40, 13, 27]
       
-      if e.keyCode is esc
+      if e.which is esc
         @el.find('.search .box').val('')
       else if e.keyCode is enter
         @updateValues(e)
@@ -41,7 +41,8 @@ class WB.AppStoreSearch
   hide: ->
     WB.Popup.hideActive()
   addResult: (app) ->
-    html = $.mustache(WB.t.popups.partials.app_store_search_result, app, WB.t.popups.partials)
+    # html = $.mustache(WB.t.popups.partials.app_store_search_result, app, WB.t.popups.partials)
+    html = $(WB.t['popups/app_store_search_result'](app))
     html.find('.select').click (e) =>
       @hide()
       a = new WB.App(null,app)
@@ -49,4 +50,5 @@ class WB.AppStoreSearch
     @results().append(html)
     
   body: (view) ->
-    Mustache.to_html(WB.t.popups.app_store_search, view, WB.t.popups.partials)
+    # Mustache.to_html(WB.t.popups.app_store_search, view, WB.t.popups.partials)
+    WB.t['popups/app_store_search'](view)

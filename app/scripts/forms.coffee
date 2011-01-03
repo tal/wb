@@ -34,6 +34,7 @@ WB.forms =
 
 class WB.forms.Icon
   constructor: (@data) ->
-    t = WB.t.icons
-    el = $.mustache(t.new_icon,@data,t.partials)
+    # t = WB.t.icons
+    # el = $.mustache(t.new_icon,@data,t.partials)
+    el = WB.t['icons/new_icon'](@data)
     @$el = $(el)

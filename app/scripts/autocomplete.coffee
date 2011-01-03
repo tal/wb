@@ -35,16 +35,16 @@ class WB.AppAc
   keydown: (e) =>
     [down, up, enter, esc] = [38, 40, 13, 27]
     
-    if e.keyCode in [up,down,enter]
+    if e.which in [up,down,enter]
       e.preventDefault()
       
       return false unless @apps.length > 0
       
-      if e.keyCode is down
+      if e.which is down
         @moveUp()
-      else if e.keyCode is up
+      else if e.which is up
         @moveDown()
-      else if e.keyCode is enter
+      else if e.which is enter
         @set() if @selected?
       return false
   
@@ -78,7 +78,7 @@ class WB.AppAc
       
   
   $results: (view) ->
-    $.mustache(WB.t.apps_autocomplete.results,view,WB.t.apps_autocomplete.partials)
+    $(WB.t['apps_autocomplete/results'](view))
   setText: (text) ->
     view = text: text
     $results = @$results(view)
@@ -127,7 +127,7 @@ class WB.AppAc
   
   unset: =>
     @img.remove()
-    @input.show()
+    @input.show().focus()
     @app_id_input.val('')
   
   unbindUnset: ->

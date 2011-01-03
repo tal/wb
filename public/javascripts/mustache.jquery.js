@@ -333,6 +333,12 @@ window.Mustache = function() {
   });
 }();
 
+Mustache.template = function(templateString) {
+  return function() {
+    return Mustache.to_html(templateString, arguments[0], arguments[1]);
+  };
+};
+
   $.mustache = function(template, view, partials) {
     return $(Mustache.to_html(template, view, partials));
   };

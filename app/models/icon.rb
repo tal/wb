@@ -42,8 +42,39 @@ class Icon < Sequel::Model
     store_file
   end
   
+  REAL_SIZE_MAPPING = {
+    'iphone1' => 'Original',
+    'ipad1' => 'iPad',
+    'iphone2' => 'Retena'
+  }
+  
+  def real_size_name
+    REAL_SIZE_MAPPING[size] || 'Unknown'
+  end
+  
   def new_code
     UUIDTools::UUID.random_create.to_s.gsub('-','')
+  end
+  
+  def as_json(args={})
+    hsh = {
+      :values => values,
+      :theme_id => theme_id,
+      :app_id => app_id,
+      :user_id => user_id,
+      :url => url,
+      :size => size,
+      :real_size_name => real_size_name,
+      :state => state
+    }
+    
+    if args[:with]
+      args[:with].collect! {|i| i.to_sym}
+      hsh[:app_name] = app.name if args[:with].include?(:app_name)
+      hsh[:theme_name] = theme.name if args[:with].include?(:theme_name)
+    end
+    
+    hsh
   end
   
   def store_file

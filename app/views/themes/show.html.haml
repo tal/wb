@@ -1,0 +1,6 @@
+#themes
+
+:javascript
+  var theme = new WB.Theme(#{@theme.to_json(:icons => true)});
+  WB.noHistory = true;
+  $('#themes').html(theme.el);

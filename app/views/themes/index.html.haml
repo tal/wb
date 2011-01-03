@@ -1,0 +1,9 @@
+#themes
+
+:javascript
+  var themes = #{@themes.to_json}, $themes = $('#themes');
+  $.each(themes, function(i,theme){
+    var t = new WB.Theme(theme);
+    $('#themes').append(t.el);
+  });
+  

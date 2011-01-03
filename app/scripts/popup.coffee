@@ -1,8 +1,11 @@
 class WB.Popup
   constructor: (view) ->
-    WB.Popup._overlay ||= $('<div id="facebox_overly"></div>').hide().appendTo('body')
     
-    @el = $.mustache(WB.t.popups[view['template']]||WB.t.popups.default, view, WB.t.popups.partials).hide()
+    if view['template'] && WB.t["popups/#{view['template']}"]
+      @el = $(WB.t["popups/#{view['template']}"](view))
+    else
+      @el = $(WB.t["popups/default"](view))
+    @el.hide()
     
     WB.Popup._all.push(@el)
     
@@ -21,7 +24,8 @@ class WB.Popup
     @el.show()
 
 WB.Popup._all = []
-
+jQuery(document).ready ($) ->
+  WB.Popup._overlay = $('<div id="facebox_overly"></div>').hide().appendTo('body')
 WB.Popup.hideActive = ->
   WB.Popup._overlay.hide()
   WB.Popup._active.remove() if WB.Popup._active

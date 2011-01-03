@@ -1,0 +1,11 @@
+template_extension: html.mustache
+javascript_compressor: closure
+template_function: Mustache.template
+template_namespace: WB.t
+template_base_path: app/templates
+
+javascripts:
+  libs:
+    - public/javascripts/*.js
+  templates:
+    - app/templates/**/*.html.mustache

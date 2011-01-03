@@ -43,6 +43,7 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.0.0)
+    closure-compiler (0.3.3)
     columnize (0.3.1)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -53,6 +54,9 @@ GEM
     highline (1.6.1)
     hpricot (0.8.2)
     i18n (0.4.1)
+    jammit (0.5.4)
+      closure-compiler (>= 0.1.0)
+      yui-compressor (>= 0.9.1)
     jsmin (1.0.1)
     json (1.4.6)
     koalemos (0.0.3)
@@ -115,6 +119,7 @@ GEM
     uuidtools (2.1.1)
     xml-simple (1.0.12)
     yajl-ruby (0.7.8)
+    yui-compressor (0.9.1)
 
 PLATFORMS
   ruby
@@ -126,6 +131,7 @@ DEPENDENCIES
   haml
   haml-rails
   hpricot
+  jammit
   json
   koalemos
   mustache
